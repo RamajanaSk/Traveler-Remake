@@ -7,7 +7,7 @@ class OSMService {
   Future<Map<String, dynamic>> getMapData({
     required double lat,
     required double lon,
-    double radius = 50,
+    double radius = 1500,
   }) async {
     try {
       final query =
