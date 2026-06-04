@@ -6,15 +6,15 @@ class HomeCoverTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RichText(
-      text: const TextSpan(
+      text: TextSpan(
         children: [
           TextSpan(
             text: "Adventure\n",
             style: TextStyle(
               fontSize: 36,
               fontWeight: FontWeight.w300,
-              color: Colors.white,
               height: 1,
+              color: Colors.white,
             ),
           ),
 
@@ -23,8 +23,11 @@ class HomeCoverTitle extends StatelessWidget {
             style: TextStyle(
               fontSize: 36,
               fontWeight: FontWeight.w800,
-              color: Colors.white,
               height: 1,
+              foreground: Paint()
+                ..shader = const LinearGradient(
+                  colors: [Color(0xFF00CFFF), Color(0xFF4DA6FF)],
+                ).createShader(const Rect.fromLTWH(0, 0, 300, 70)),
             ),
           ),
         ],

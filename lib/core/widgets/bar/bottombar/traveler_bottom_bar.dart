@@ -58,17 +58,19 @@ class _TravelerBottomBarState extends State<TravelerBottomBar> {
       extendBody: true,
       body: selectedScreen,
       bottomNavigationBar: Container(
-        height: 60,
-        margin: const EdgeInsets.only(right: 15, left: 15, bottom: 17),
+        height: 72,
+        margin: const EdgeInsets.fromLTRB(16, 0, 16, 20),
         decoration: BoxDecoration(
-          color: MediaQuery.of(context).platformBrightness == Brightness.dark
-              ? const Color.fromARGB(44, 255, 254, 254)
-              : Colors.white,
+          color: Theme.of(context).colorScheme.surface.withOpacity(0.95),
           borderRadius: BorderRadius.circular(15),
-          boxShadow: const [
+          border: Border.all(
+            color: Theme.of(context).colorScheme.outline.withOpacity(0.1),
+          ),
+          boxShadow: [
             BoxShadow(
-              color: Color.fromARGB(255, 1, 1, 1),
-              offset: Offset(0, 2),
+              color: Colors.black.withOpacity(0.08),
+              blurRadius: 20,
+              offset: const Offset(0, 8),
             ),
           ],
         ),
@@ -80,56 +82,41 @@ class _TravelerBottomBarState extends State<TravelerBottomBar> {
 
             final isSelected = widget.index == index;
 
-            return Material(
-              color:
-                  MediaQuery.of(context).platformBrightness == Brightness.dark
-                  ? Colors.transparent
-                  : Colors.white,
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    widget.index = index;
-                  });
-                },
-                child: Card(
-                  elevation: isSelected ? 3 : 0,
-                  color: isSelected
-                      ? MediaQuery.of(context).platformBrightness ==
-                                Brightness.dark
-                            ? const Color.fromRGBO(255, 255, 255, 0.064)
-                            : Colors.white
-                      : MediaQuery.of(context).platformBrightness ==
-                            Brightness.dark
-                      ? Colors.transparent
-                      : Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: icon is IconData
-                        ? Icon(
-                            icon,
-                            color: isSelected
-                                ? AppColors.middleGradientColor
-                                : MediaQuery.of(context).platformBrightness ==
-                                      Brightness.dark
-                                ? Colors.white
-                                : null,
-                          )
-                        : Image.asset(
-                            icon,
-                            width: 25,
-                            height: 25,
-                            color: isSelected
-                                ? AppColors.middleGradientColor
-                                : MediaQuery.of(context).platformBrightness ==
-                                      Brightness.dark
-                                ? Colors.white
-                                : null,
-                          ),
-                  ),
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  widget.index = index;
+                });
+              },
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 250),
+                curve: Curves.easeOut,
+                padding: EdgeInsets.symmetric(
+                  horizontal: isSelected ? 18 : 12,
+                  vertical: 10,
                 ),
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? AppColors.middleGradientColor.withOpacity(0.05)
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: icon is IconData
+                    ? Icon(
+                        icon,
+                        size: 24,
+                        color: isSelected
+                            ? AppColors.middleGradientColor
+                            : Theme.of(context).colorScheme.onSurfaceVariant,
+                      )
+                    : Image.asset(
+                        icon,
+                        width: 24,
+                        height: 24,
+                        color: isSelected
+                            ? AppColors.middleGradientColor
+                            : Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
               ),
             );
           }).toList(),

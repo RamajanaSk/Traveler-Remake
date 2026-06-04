@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:travelerremake/core/theme/app_background_gradient.dart';
 import 'package:travelerremake/core/widgets/bar/topbar/topNavBar.dart';
 import 'package:travelerremake/core/widgets/panel/sidePanelWidget.dart';
 import 'package:travelerremake/features/home/presentation/sections/home_cover_section.dart';
-import 'package:travelerremake/features/home/presentation/sections/location_section.dart';
 import 'package:travelerremake/features/home/presentation/widgets/cards/current_location_card.dart';
 import 'package:travelerremake/features/home/presentation/widgets/cards/daily_streak_card.dart';
+import 'package:travelerremake/features/home/presentation/widgets/cards/live_explorer_card.dart';
 import 'package:travelerremake/features/home/presentation/widgets/cards/live_travelers_card.dart';
 import 'package:travelerremake/features/home/presentation/widgets/cards/map_progress_card.dart';
-import 'package:travelerremake/features/home/presentation/widgets/cards/motivation_card.dart';
 import 'package:travelerremake/features/home/presentation/widgets/cards/random_quest_card.dart';
 import 'package:travelerremake/features/home/presentation/widgets/cards/todays_challenge_card.dart';
-import 'package:travelerremake/features/home/presentation/widgets/cards/traveler_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -94,45 +93,43 @@ class HomePage extends StatelessWidget {
           print('Notifications');
         },
 
-        trailingIcon2: Icons.person_outline,
+        trailingIcon2: Icons.share,
         trailingOnPressed2: () {
           print('Profile');
         },
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(18),
-        child: Column(
-          children: [
-            HomeCoverSection(),
+      body: AppBackgroundGradient(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(18),
+          child: Column(
+            children: [
+              HomeCoverSection(),
 
-            const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-            const MotivationCard(),
+              const LiveExplorerCard(),
 
-            const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-            const TodaysChallengeCard(),
+              const TodaysChallengeCard(),
 
-            const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-            const LiveTravelersCard(),
+              const MapProgressCard(),
 
-            const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-            const MapProgressCard(),
+              const CurrentLocationCard(),
 
-            const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-            const CurrentLocationCard(),
+              const DailyStreakCard(),
 
-            const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-            const DailyStreakCard(),
-
-            const SizedBox(height: 20),
-
-            const RandomQuestCard(),
-          ],
+              const RandomQuestCard(),
+            ],
+          ),
         ),
       ),
     );

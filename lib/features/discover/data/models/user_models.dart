@@ -4,6 +4,8 @@ class User {
   final String cityName;
   final String countryName;
   final double distance;
+  final int level;
+  final bool isOnline;
 
   const User({
     required this.id,
@@ -11,5 +13,7 @@ class User {
     required this.cityName,
     required this.countryName,
     required this.distance,
+    required this.level,
+    required this.isOnline,
   });
 }

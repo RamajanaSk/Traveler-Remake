@@ -6,20 +6,43 @@ class DiscoverSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Row(
       children: [
         Expanded(
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: "Search traveler...",
-              prefixIcon: Icon(Icons.search),
+          child: Container(
+            height: 52,
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.04),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
+            ),
+            child: TextField(
+              style: TextStyle(
+                color: theme.colorScheme.onSurface,
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
+              ),
+              decoration: InputDecoration(
+                hintText: "Search places, travelers...",
+                hintStyle: TextStyle(
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                ),
+                prefixIcon: Icon(
+                  Icons.search_rounded,
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                ),
+                border: InputBorder.none,
+                contentPadding: const EdgeInsets.symmetric(vertical: 16),
+              ),
             ),
           ),
         ),
 
-        SizedBox(width: 12),
+        const SizedBox(width: 10),
 
-        QrButton(),
+        const QrButton(),
       ],
     );
   }

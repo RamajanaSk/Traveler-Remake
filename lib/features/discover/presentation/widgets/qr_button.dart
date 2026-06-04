@@ -7,24 +7,17 @@ class QrButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return InkWell(
       onTap: onPressed,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(12),
       child: Container(
         width: 52,
         height: 52,
-        decoration: BoxDecoration(
-          color: theme.colorScheme.surface,
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(
-            color: theme.colorScheme.outline.withValues(alpha: 0.3),
-          ),
-        ),
-        child: Icon(
-          Icons.qr_code_scanner_rounded,
-          color: theme.colorScheme.onSurface,
+
+        child: const Icon(
+          Icons.qr_code_scanner_outlined,
+          color: Color.fromARGB(255, 255, 255, 255),
+          size: 25,
         ),
       ),
     );

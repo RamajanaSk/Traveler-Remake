@@ -13,20 +13,13 @@ class TravelerCard extends StatelessWidget {
       padding: const EdgeInsets.all(20),
 
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(15),
 
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFF111827), Color(0xFF102A43)],
-        ),
-
-        border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
-
+        border: Border.all(color: Colors.white.withValues(alpha: 0.10)),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF2147A6).withValues(alpha: 0.15),
-            blurRadius: 25,
+            color: const Color.fromARGB(255, 36, 36, 36),
+            blurRadius: 1,
             spreadRadius: 1,
           ),
         ],
