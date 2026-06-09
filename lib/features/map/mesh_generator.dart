@@ -1,4 +1,4 @@
-import 'package:travelerremake/features/map/building_mesh.dart';
+import 'package:travelerremake/features/map/building_cache/building_mesh.dart';
 import 'package:travelerremake/features/map/coordinate_converter.dart';
 import 'package:travelerremake/features/map/map_object_type.dart';
 

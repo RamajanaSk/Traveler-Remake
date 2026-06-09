@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:travelerremake/features/map/map_object_type.dart';
 import 'package:travelerremake/features/map/map_painter.dart';
 import 'package:travelerremake/features/map/osm_parser.dart';
 import 'package:travelerremake/features/map/osm_service/osm_service.dart';
+import 'package:flutter/gestures.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -20,39 +23,96 @@ class _MapPageState extends State<MapPage> {
 
   List<MapObject> worldObjects = [];
 
+  double minLat = double.infinity;
+  double maxLat = -double.infinity;
+
+  double minLon = double.infinity;
+  double maxLon = -double.infinity;
+
+  final Set<String> loadedChunks = {};
+
+  double currentLat = 48.7758;
+  double currentLon = 9.1829;
+
+  bool loadingChunk = false;
+
+  Offset cameraPosition = const Offset(1500, 1500);
+
+  double zoom = 1.0;
+
+  double startZoom = 1.0;
+
   @override
   void initState() {
     super.initState();
     loadWorld();
   }
 
-  Future<void> loadWorld() async {
+  Future<void> loadChunk({required double lat, required double lon}) async {
+    final chunkKey = "${lat.toStringAsFixed(3)}_${lon.toStringAsFixed(3)}";
+
+    if (loadedChunks.contains(chunkKey)) {
+      return;
+    }
+
+    loadedChunks.add(chunkKey);
+
     try {
-      final json = await service.getMapData(lat: 48.7758, lon: 9.1829);
+      final json = await service.getMapData(lat: lat, lon: lon);
 
-      worldObjects = parser.parse(json);
+      final objects = parser.parse(json);
 
-      debugPrint("Loaded ${worldObjects.length} world objects");
+      for (final object in objects) {
+        for (final point in object.points) {
+          minLat = point.lat < minLat ? point.lat : minLat;
+          maxLat = point.lat > maxLat ? point.lat : maxLat;
 
-      for (final object in worldObjects) {
-        switch (object.type) {
-          case MapObjectType.building:
-            debugPrint("Building with ${object.points.length} points");
-            break;
-
-          case MapObjectType.road:
-            debugPrint("Road with ${object.points.length} points");
-            break;
-
-          case MapObjectType.tree:
-            debugPrint("Tree");
-            break;
-
-          case MapObjectType.park:
-            debugPrint("Park");
-            break;
+          minLon = point.lon < minLon ? point.lon : minLon;
+          maxLon = point.lon > maxLon ? point.lon : maxLon;
         }
       }
+
+      setState(() {
+        worldObjects.addAll(objects);
+      });
+
+      debugPrint("Loaded chunk $chunkKey -> ${objects.length} objects");
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  Future<void> checkForChunkLoading() async {
+    if (loadingChunk) return;
+
+    loadingChunk = true;
+
+    try {
+      const movementStep = 0.01;
+
+      if (cameraPosition.dy < 500) {
+        await loadChunk(lat: currentLat + movementStep, lon: currentLon);
+      }
+
+      if (cameraPosition.dy > 2500) {
+        await loadChunk(lat: currentLat - movementStep, lon: currentLon);
+      }
+
+      if (cameraPosition.dx < 500) {
+        await loadChunk(lat: currentLat, lon: currentLon - movementStep);
+      }
+
+      if (cameraPosition.dx > 2500) {
+        await loadChunk(lat: currentLat, lon: currentLon + movementStep);
+      }
+    } finally {
+      loadingChunk = false;
+    }
+  }
+
+  Future<void> loadWorld() async {
+    try {
+      await loadChunk(lat: currentLat, lon: currentLon);
     } catch (e) {
       error = e.toString();
     }
@@ -76,8 +136,47 @@ class _MapPageState extends State<MapPage> {
 
     return Scaffold(
       appBar: AppBar(title: Text("Objects: ${worldObjects.length}")),
-      body: SizedBox.expand(
-        child: CustomPaint(painter: MapPainter(objects: worldObjects)),
+      body: Listener(
+        onPointerSignal: (pointerSignal) {
+          if (pointerSignal is PointerScrollEvent) {
+            setState(() {
+              if (pointerSignal.scrollDelta.dy > 0) {
+                zoom *= 0.9;
+              } else {
+                zoom *= 1.1;
+              }
+
+              zoom = zoom.clamp(1.0, 3.0);
+            });
+          }
+        },
+        child: GestureDetector(
+          onScaleStart: (details) {
+            startZoom = zoom;
+          },
+          onScaleUpdate: (details) {
+            setState(() {
+              if (details.pointerCount == 1) {
+                cameraPosition -= details.focalPointDelta / zoom;
+
+                checkForChunkLoading();
+              }
+            });
+          },
+          child: SizedBox.expand(
+            child: CustomPaint(
+              painter: MapPainter(
+                objects: worldObjects,
+                cameraPosition: cameraPosition,
+                zoom: zoom,
+                minLat: minLat,
+                maxLat: maxLat,
+                minLon: minLon,
+                maxLon: maxLon,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
