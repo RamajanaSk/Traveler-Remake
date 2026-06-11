@@ -22,7 +22,7 @@ class OSMParser {
     for (final element in elements) {
       final tags = element["tags"] ?? {};
 
-      // TREE NODES
+      // TREES
       if (element["type"] == "node") {
         if (tags["natural"] == "tree") {
           final point = nodes[element["id"]];
@@ -34,6 +34,7 @@ class OSMParser {
                 points: [point],
                 height: 0,
                 bounds: Rect.fromLTWH(point.lon, point.lat, 0, 0),
+                center: Offset(point.lon, point.lat),
               ),
             );
           }
@@ -59,15 +60,25 @@ class OSMParser {
       double minLon = double.infinity;
       double maxLon = -double.infinity;
 
+      double centerLat = 0;
+      double centerLon = 0;
+
       for (final point in points) {
         minLat = point.lat < minLat ? point.lat : minLat;
         maxLat = point.lat > maxLat ? point.lat : maxLat;
 
         minLon = point.lon < minLon ? point.lon : minLon;
         maxLon = point.lon > maxLon ? point.lon : maxLon;
+
+        centerLat += point.lat;
+        centerLon += point.lon;
       }
 
+      centerLat /= points.length;
+      centerLon /= points.length;
+
       final bounds = Rect.fromLTRB(minLon, minLat, maxLon, maxLat);
+
       if (tags["building"] != null) {
         result.add(
           MapObject(
@@ -75,6 +86,7 @@ class OSMParser {
             points: points,
             height: double.tryParse(tags["height"]?.toString() ?? "") ?? 20,
             bounds: bounds,
+            center: Offset(centerLon, centerLat),
           ),
         );
       }
@@ -86,6 +98,7 @@ class OSMParser {
             points: points,
             height: 0,
             bounds: bounds,
+            center: Offset(centerLon, centerLat),
           ),
         );
       }
@@ -97,6 +110,7 @@ class OSMParser {
             points: points,
             height: 0,
             bounds: bounds,
+            center: Offset(centerLon, centerLat),
           ),
         );
       }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:travelerremake/features/map/models/player.dart';
 import 'package:travelerremake/features/map/painter/map_painter.dart';
 
 import '../../controller/map_controller.dart';
@@ -8,6 +9,7 @@ import '../../models/camera_state.dart';
 class MapViewport extends StatelessWidget {
   final MapController controller;
   final CameraState camera;
+  final Player player;
 
   final VoidCallback onCameraChanged;
 
@@ -16,6 +18,7 @@ class MapViewport extends StatelessWidget {
     required this.controller,
     required this.camera,
     required this.onCameraChanged,
+    required this.player,
   });
 
   @override
@@ -36,6 +39,7 @@ class MapViewport extends StatelessWidget {
         onScaleUpdate: (details) {
           if (details.pointerCount == 1) {
             camera.move(details.focalPointDelta);
+            player.position = camera.position;
 
             onCameraChanged();
           }
@@ -46,6 +50,7 @@ class MapViewport extends StatelessWidget {
               objects: controller.worldObjects,
               cameraPosition: camera.position,
               zoom: camera.zoom,
+              player: player,
               minLat: controller.minLat,
               maxLat: controller.maxLat,
               minLon: controller.minLon,

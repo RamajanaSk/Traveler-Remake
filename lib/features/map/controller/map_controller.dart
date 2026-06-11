@@ -40,7 +40,7 @@ class MapController extends ChangeNotifier {
           maxLat = point.lat > maxLat ? point.lat : maxLat;
 
           minLon = point.lon < minLon ? point.lon : minLon;
-          maxLon = point.lon > maxLon ? point.lon : minLon;
+          maxLon = point.lon > maxLon ? point.lon : maxLon;
         }
       }
 
