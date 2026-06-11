@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:travelerremake/features/map/map_object_type.dart';
+import 'package:travelerremake/features/map/models/map_object_type.dart';
 
 class OSMParser {
   List<MapObject> parse(Map<String, dynamic> json) {
@@ -68,7 +68,6 @@ class OSMParser {
       }
 
       final bounds = Rect.fromLTRB(minLon, minLat, maxLon, maxLat);
-
       if (tags["building"] != null) {
         result.add(
           MapObject(

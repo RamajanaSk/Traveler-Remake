@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travelerremake/features/map/map_object_type.dart';
+import 'package:travelerremake/features/map/models/map_object_type.dart';
 
 class MapPainter extends CustomPainter {
   final List<MapObject> objects;

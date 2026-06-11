@@ -5,6 +5,8 @@ enum MapObjectType { building, road, tree, park }
 class MapObject {
   final MapObjectType type;
   final List<GeoPoint> points;
+
+  /// Gebäudehöhe in Metern
   final double height;
 
   final Rect bounds;
@@ -12,8 +14,8 @@ class MapObject {
   const MapObject({
     required this.type,
     required this.points,
-    required this.height,
     required this.bounds,
+    this.height = 10,
   });
 }
 
