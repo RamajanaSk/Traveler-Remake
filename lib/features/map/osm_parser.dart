@@ -35,6 +35,9 @@ class OSMParser {
                 height: 0,
                 bounds: Rect.fromLTWH(point.lon, point.lat, 0, 0),
                 center: Offset(point.lon, point.lat),
+                id: element['id'].toString(),
+                name: element['tags']?['name'],
+                tags: element['tags'] ?? {},
               ),
             );
           }
@@ -87,6 +90,9 @@ class OSMParser {
             height: double.tryParse(tags["height"]?.toString() ?? "") ?? 20,
             bounds: bounds,
             center: Offset(centerLon, centerLat),
+            id: element['id'].toString(),
+            name: element['tags']?['name'],
+            tags: element['tags'] ?? {},
           ),
         );
       }
@@ -99,6 +105,9 @@ class OSMParser {
             height: 0,
             bounds: bounds,
             center: Offset(centerLon, centerLat),
+            id: element['id'].toString(),
+            name: element['tags']?['name'],
+            tags: element['tags'] ?? {},
           ),
         );
       }
@@ -111,6 +120,9 @@ class OSMParser {
             height: 0,
             bounds: bounds,
             center: Offset(centerLon, centerLat),
+            id: element['id'].toString(),
+            name: element['tags']?['name'],
+            tags: element['tags'] ?? {},
           ),
         );
       }

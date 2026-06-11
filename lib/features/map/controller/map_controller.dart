@@ -1,7 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/foundation.dart';
 import 'package:travelerremake/features/map/models/map_object_type.dart';
 import 'package:travelerremake/features/map/osm_parser.dart';
 import 'package:travelerremake/features/map/osm_service/osm_service.dart';
+import 'package:travelerremake/features/map/services/discovery_service.dart';
+import 'package:travelerremake/features/map/utils/map_converter.dart';
 
 class MapController extends ChangeNotifier {
   final OSMService service;
@@ -19,6 +23,24 @@ class MapController extends ChangeNotifier {
   double maxLon = -double.infinity;
 
   bool loadingChunk = false;
+  void updateDiscovery(Offset playerPosition) {
+    final converter = MapConverter(
+      minLat: minLat,
+      maxLat: maxLat,
+      minLon: minLon,
+      maxLon: maxLon,
+    );
+
+    final discoveredSomething = DiscoveryService.update(
+      objects: worldObjects,
+      playerPosition: playerPosition,
+      converter: converter,
+    );
+
+    if (discoveredSomething) {
+      notifyListeners();
+    }
+  }
 
   Future<void> loadChunk({required double lat, required double lon}) async {
     final chunkKey = "${lat.toStringAsFixed(3)}_${lon.toStringAsFixed(3)}";

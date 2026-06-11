@@ -33,6 +33,12 @@ class _MapPageState extends State<MapPage> {
         .length;
   }
 
+  int get discoveredRoads {
+    return controller.worldObjects
+        .where((o) => o.type == MapObjectType.road && o.discovered)
+        .length;
+  }
+
   int get xp => discoveredBuildings * 10;
 
   int get level => (xp ~/ 100) + 1;
@@ -87,6 +93,10 @@ class _MapPageState extends State<MapPage> {
                 ),
                 Text(
                   "$discoveredBuildings Buildings",
+                  style: const TextStyle(fontSize: 12),
+                ),
+                Text(
+                  "$discoveredRoads Roads",
                   style: const TextStyle(fontSize: 12),
                 ),
               ],
