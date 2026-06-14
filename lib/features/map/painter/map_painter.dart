@@ -30,7 +30,9 @@ class MapPainter extends CustomPainter {
     canvas.save();
 
     canvas.translate(size.width / 2, size.height / 2);
+
     canvas.scale(zoom);
+
     canvas.translate(-cameraPosition.dx, -cameraPosition.dy);
 
     for (final object in objects) {
@@ -70,6 +72,34 @@ class MapPainter extends CustomPainter {
             converter: converter,
           );
           break;
+        case MapObjectType.water:
+          ParkRenderer.draw(
+            canvas: canvas,
+            object: object,
+            zoom: zoom,
+            converter: converter,
+          );
+          break;
+
+        case MapObjectType.forest:
+          ParkRenderer.draw(
+            canvas: canvas,
+            object: object,
+            zoom: zoom,
+            converter: converter,
+          );
+          break;
+        case MapObjectType.railway:
+          RoadRenderer.draw(
+            canvas: canvas,
+            object: object,
+            zoom: zoom,
+            converter: converter,
+          );
+          break;
+        case MapObjectType.poi:
+          // TODO: Handle this case.
+          throw UnimplementedError();
       }
     }
 

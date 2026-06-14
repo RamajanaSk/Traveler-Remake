@@ -7,7 +7,7 @@ class OSMService {
   Future<Map<String, dynamic>> getMapData({
     required double lat,
     required double lon,
-    double radius = 1500,
+    double radius = 600,
   }) async {
     try {
       final query =
@@ -19,13 +19,38 @@ class OSMService {
 
   way["highway"](around:$radius,$lat,$lon);
 
-  node["natural"="tree"](around:$radius,$lat,$lon);
-
   way["leisure"="park"](around:$radius,$lat,$lon);
 
   node["amenity"](around:$radius,$lat,$lon);
 
   node["tourism"](around:$radius,$lat,$lon);
+  way["water"](around:$radius,$lat,$lon);
+
+  way["natural"="water"](around:$radius,$lat,$lon);
+
+  way["landuse"="forest"](around:$radius,$lat,$lon);
+
+  way["landuse"="grass"](around:$radius,$lat,$lon);
+
+  way["landuse"="meadow"](around:$radius,$lat,$lon);
+
+  way["natural"="grassland"](around:$radius,$lat,$lon);
+
+  way["railway"](around:$radius,$lat,$lon);
+
+  node["historic"](around:$radius,$lat,$lon);
+
+  node["memorial"](around:$radius,$lat,$lon);
+
+  node["tourism"="viewpoint"](around:$radius,$lat,$lon);
+
+  node["amenity"="restaurant"](around:$radius,$lat,$lon);
+
+  node["amenity"="cafe"](around:$radius,$lat,$lon);
+
+  node["amenity"="bar"](around:$radius,$lat,$lon);
+
+  node["shop"](around:$radius,$lat,$lon);
 );
 
 (._;>;);

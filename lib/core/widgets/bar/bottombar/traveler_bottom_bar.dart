@@ -52,11 +52,11 @@ class _TravelerBottomBarState extends State<TravelerBottomBar> {
 
   @override
   Widget build(BuildContext context) {
-    Widget selectedScreen = screens[widget.index];
+    // Widget selectedScreen = screens[widget.index];
 
     return Scaffold(
       extendBody: true,
-      body: selectedScreen,
+      body: IndexedStack(index: widget.index, children: screens),
       bottomNavigationBar: Container(
         height: 72,
         margin: const EdgeInsets.fromLTRB(16, 0, 16, 20),

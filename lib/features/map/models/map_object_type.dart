@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-enum MapObjectType { building, road, tree, park }
+enum MapObjectType { building, road, tree, park, water, forest, railway, poi }
 
 class MapObject {
   final MapObjectType type;
@@ -48,8 +48,15 @@ class MapObject {
 
 class GeoPoint {
   final double lat;
-
   final double lon;
 
-  const GeoPoint({required this.lat, required this.lon});
+  final double worldX;
+  final double worldY;
+
+  GeoPoint({
+    required this.lat,
+    required this.lon,
+    required this.worldX,
+    required this.worldY,
+  });
 }

@@ -24,8 +24,8 @@ class ParkRenderer {
     path.close();
 
     final parkColor = Color.lerp(
-      Colors.green.withValues(alpha: 0.2),
-      Colors.greenAccent.withValues(alpha: 0.6),
+      Colors.white.withValues(alpha: 0.8),
+      const Color.fromARGB(255, 93, 255, 98),
       object.discoveryProgress,
     )!;
 

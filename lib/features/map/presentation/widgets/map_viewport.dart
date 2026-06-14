@@ -41,9 +41,7 @@ class MapViewport extends StatelessWidget {
           if (details.pointerCount == 1) {
             camera.move(details.focalPointDelta);
 
-            player.position = camera.position;
-
-            controller.updateDiscovery(player.position);
+            controller.updateDiscovery(camera.position, player.radius);
 
             onCameraChanged();
           }
@@ -55,12 +53,7 @@ class MapViewport extends StatelessWidget {
               cameraPosition: camera.position,
               zoom: camera.zoom,
               player: player,
-              converter: MapConverter(
-                minLat: controller.minLat,
-                maxLat: controller.maxLat,
-                minLon: controller.minLon,
-                maxLon: controller.maxLon,
-              ),
+              converter: MapConverter(),
             ),
           ),
         ),

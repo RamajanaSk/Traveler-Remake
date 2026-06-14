@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:travelerremake/features/discover/data/models/user_models.dart';
 import 'package:travelerremake/features/discover/presentation/widgets/discover_user_tile.dart';
+import 'package:travelerremake/features/discover/presentation/widgets/user_preview_sheet.dart';
 
 class DiscoverUserList extends StatelessWidget {
-  const DiscoverUserList({super.key});
+  final String searchQuery;
+
+  const DiscoverUserList({super.key, required this.searchQuery});
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +31,28 @@ class DiscoverUserList extends StatelessWidget {
       ),
     ];
 
+    final filteredUsers = users.where((user) {
+      return user.username.toLowerCase().contains(searchQuery.toLowerCase());
+    }).toList();
+
     return ListView.separated(
-      itemCount: users.length,
+      itemCount: filteredUsers.length,
       separatorBuilder: (_, __) => const SizedBox(height: 12),
       itemBuilder: (_, index) {
-        return DiscoverUserTile(user: users[index]);
+        final user = filteredUsers[index];
+
+        return DiscoverUserTile(
+          user: user,
+          onTap: () {
+            showModalBottomSheet(
+              context: context,
+              showDragHandle: true,
+              builder: (_) {
+                return UserPreviewSheet(user: user);
+              },
+            );
+          },
+        );
       },
     );
   }

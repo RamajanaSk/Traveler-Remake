@@ -6,55 +6,33 @@ class DiscoveryService {
   static bool update({
     required List<MapObject> objects,
     required Offset playerPosition,
+    required double discoverRadius,
     required MapConverter converter,
   }) {
     bool discoveredSomething = false;
 
-    const previewRadius = 50.0;
-    const discoverRadius = 20.0;
-
-    const previewRadiusSquared = previewRadius * previewRadius;
-
-    const discoverRadiusSquared = discoverRadius * discoverRadius;
+    final discoverRadiusSquared = discoverRadius * discoverRadius;
 
     for (final object in objects) {
       if (object.discovered) continue;
 
-      Offset objectPosition;
+      double closestDistanceSquared = double.infinity;
 
-      if (object.type == MapObjectType.tree) {
-        objectPosition = converter.convert(object.points.first);
-      } else {
-        final centerPoint = object.points[object.points.length ~/ 2];
+      for (final point in object.points) {
+        final pos = converter.convert(point);
 
-        objectPosition = converter.convert(centerPoint);
+        final dx = pos.dx - playerPosition.dx;
+        final dy = pos.dy - playerPosition.dy;
+
+        final distanceSquared = dx * dx + dy * dy;
+
+        if (distanceSquared < closestDistanceSquared) {
+          closestDistanceSquared = distanceSquared;
+        }
       }
 
-      final dx = objectPosition.dx - playerPosition.dx;
-
-      final dy = objectPosition.dy - playerPosition.dy;
-
-      // Grober Vorfilter
-      if (dx.abs() > 200) continue;
-      if (dy.abs() > 200) continue;
-
-      final distanceSquared = dx * dx + dy * dy;
-
-      // Spieler kommt in die Nähe
-      if (distanceSquared < previewRadiusSquared) {
-        object.discoveryProgress += 0.01;
-      }
-
-      // Spieler ist wirklich nah dran
-      if (distanceSquared < discoverRadiusSquared) {
-        object.discoveryProgress += 0.08;
-      }
-
-      if (object.discoveryProgress > 1.0) {
+      if (closestDistanceSquared < discoverRadiusSquared) {
         object.discoveryProgress = 1.0;
-      }
-
-      if (!object.discovered && object.discoveryProgress >= 1.0) {
         object.discovered = true;
         discoveredSomething = true;
       }

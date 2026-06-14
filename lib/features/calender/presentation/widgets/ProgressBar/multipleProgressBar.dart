@@ -52,7 +52,8 @@ class _MultipleProgressBarState extends State<MultipleProgressBar> {
                   });
                 },
                 child: Card(
-                  color: MediaQuery.of(context).platformBrightness ==
+                  color:
+                      MediaQuery.of(context).platformBrightness ==
                           Brightness.dark
                       ? Colors.grey[900]
                       : Colors.white,
@@ -84,8 +85,9 @@ class _MultipleProgressBarState extends State<MultipleProgressBar> {
                                       height: 20.0,
                                       decoration: BoxDecoration(
                                         color: widget.progressColors[index],
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
+                                        borderRadius: BorderRadius.circular(
+                                          10.0,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -93,8 +95,13 @@ class _MultipleProgressBarState extends State<MultipleProgressBar> {
                                     child: Text(
                                       '${(widget.progressList[index] * 100).toInt()}%',
                                       style: TextStyle(
-                                          color: const Color.fromARGB(
-                                              255, 0, 0, 0)),
+                                        color: const Color.fromARGB(
+                                          255,
+                                          0,
+                                          0,
+                                          0,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -109,15 +116,18 @@ class _MultipleProgressBarState extends State<MultipleProgressBar> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children:
                                   widget.cityDetails[widget.cityName[index]] !=
-                                          null
-                                      ? widget
-                                          .cityDetails[widget.cityName[index]]!
-                                          .entries
-                                          .map((entry) {
-                                          return _buildDetailProgressBar(
-                                              entry.key, entry.value);
-                                        }).toList()
-                                      : [],
+                                      null
+                                  ? widget
+                                        .cityDetails[widget.cityName[index]]!
+                                        .entries
+                                        .map((entry) {
+                                          return _buildStatTile(
+                                            entry.key,
+                                            entry.value.toInt(),
+                                          );
+                                        })
+                                        .toList()
+                                  : [],
                             ),
                           ),
                       ],
@@ -172,6 +182,70 @@ class _MultipleProgressBarState extends State<MultipleProgressBar> {
           SizedBox(width: 10.0),
           Text(label),
         ],
+      ),
+    );
+  }
+
+  Widget _buildStatTile(String label, int value) {
+    IconData icon = Icons.place;
+
+    switch (label.toLowerCase()) {
+      case 'buildings':
+        icon = Icons.apartment;
+        break;
+
+      case 'roads':
+        icon = Icons.route;
+        break;
+
+      case 'trees':
+        icon = Icons.park;
+        break;
+
+      case 'parks':
+        icon = Icons.grass;
+        break;
+
+      case 'forests':
+        icon = Icons.forest;
+        break;
+
+      case 'water':
+        icon = Icons.water;
+        break;
+
+      case 'railways':
+        icon = Icons.train;
+        break;
+
+      case 'poi':
+        icon = Icons.location_pin;
+        break;
+    }
+
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 4),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        child: Row(
+          children: [
+            Icon(icon),
+
+            const SizedBox(width: 12),
+
+            Expanded(
+              child: Text(
+                label,
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+            ),
+
+            Text(
+              value.toString(),
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
       ),
     );
   }

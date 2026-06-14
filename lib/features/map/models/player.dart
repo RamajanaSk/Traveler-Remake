@@ -1,9 +1,8 @@
-import 'dart:ui' show Offset;
+import 'dart:ui';
 
 class Player {
-  Offset position;
+  Offset worldPosition; // Discovery
+  double radius;
 
-  final double radius;
-
-  Player({required this.position, this.radius = 20});
+  Player({required this.worldPosition, this.radius = 15});
 }

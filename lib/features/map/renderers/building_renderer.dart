@@ -9,8 +9,6 @@ class BuildingRenderer {
     required double zoom,
     required MapConverter converter,
   }) {
-    if (zoom < 0.5) return;
-
     final path = Path();
 
     for (int i = 0; i < object.points.length; i++) {
@@ -26,8 +24,8 @@ class BuildingRenderer {
     path.close();
 
     final color = Color.lerp(
-      Colors.white.withValues(alpha: 0.5),
-      Colors.green,
+      Colors.white.withValues(alpha: 0.8),
+      const Color.fromARGB(255, 93, 255, 98),
       object.discoveryProgress,
     )!;
 

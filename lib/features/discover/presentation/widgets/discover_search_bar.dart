@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:travelerremake/features/discover/presentation/widgets/qr_button.dart';
 
 class DiscoverSearchBar extends StatelessWidget {
-  const DiscoverSearchBar({super.key});
+  final ValueChanged<String> onChanged;
+
+  const DiscoverSearchBar({super.key, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,7 @@ class DiscoverSearchBar extends StatelessWidget {
               border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
             ),
             child: TextField(
+              onChanged: onChanged,
               style: TextStyle(
                 color: theme.colorScheme.onSurface,
                 fontSize: 15,
@@ -39,9 +42,7 @@ class DiscoverSearchBar extends StatelessWidget {
             ),
           ),
         ),
-
         const SizedBox(width: 10),
-
         const QrButton(),
       ],
     );

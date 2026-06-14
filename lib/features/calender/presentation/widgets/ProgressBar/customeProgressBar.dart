@@ -2,47 +2,48 @@ import 'package:flutter/material.dart';
 
 class CustomProgressBar extends StatelessWidget {
   final double progress;
-  final Color backgroundColor;
-  final Color progressColor;
 
-  const CustomProgressBar({
-    required this.progress,
-    required this.backgroundColor,
-    required this.progressColor,
-  });
+  const CustomProgressBar({super.key, required this.progress});
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final progressBarWidth = screenWidth / 2; // 1/3 of the screen width
+    final colorScheme = Theme.of(context).colorScheme;
 
-    return Container(
+    final screenWidth = MediaQuery.of(context).size.width;
+    final progressBarWidth = screenWidth / 2;
+
+    return SizedBox(
       width: progressBarWidth,
-      height: 20.0,
+      height: 20,
       child: Stack(
         children: [
           Container(
             width: progressBarWidth,
-            height: 20.0,
+            height: 20,
             decoration: BoxDecoration(
-              color: backgroundColor,
-              borderRadius: BorderRadius.circular(10.0),
+              color: colorScheme.surfaceContainerHighest,
+              borderRadius: BorderRadius.circular(10),
             ),
           ),
+
           FractionallySizedBox(
-            widthFactor: progress,
+            widthFactor: progress.clamp(0.0, 1.0),
             child: Container(
-              height: 20.0,
+              height: 20,
               decoration: BoxDecoration(
-                color: progressColor,
-                borderRadius: BorderRadius.circular(10.0),
+                color: colorScheme.primary,
+                borderRadius: BorderRadius.circular(10),
               ),
             ),
           ),
+
           Center(
             child: Text(
               '${(progress * 100).toInt()}%',
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(
+                color: colorScheme.onPrimary,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ],

@@ -7,33 +7,33 @@ class PlayerRenderer {
     required Size size,
     required Player player,
   }) {
-    final center = Offset(size.width / 2, size.height / 2);
+    final screenCenter = Offset(size.width / 2, size.height / 2);
 
-    canvas.drawCircle(
-      center,
-      player.radius * 5,
-      Paint()
-        ..color = Colors.blue.withValues(alpha: 0.12)
-        ..style = PaintingStyle.fill,
-    );
+    final outerRadius = player.radius * 5;
 
-    canvas.drawCircle(
-      center,
-      30,
-      Paint()..color = Colors.blue.withValues(alpha: 0.25),
-    );
+    final outerPaint = Paint()
+      ..color = Colors.blue.withValues(alpha: 0.12)
+      ..style = PaintingStyle.fill;
 
-    canvas.drawCircle(center, player.radius, Paint()..color = Colors.blue);
+    final pulsePaint = Paint()..color = Colors.blue.withValues(alpha: 0.25);
 
-    canvas.drawCircle(center, player.radius / 2, Paint()..color = Colors.white);
+    final playerPaint = Paint()..color = Colors.blue;
 
-    canvas.drawCircle(
-      center,
-      player.radius * 5,
-      Paint()
-        ..color = Colors.blue.withValues(alpha: 0.4)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2,
-    );
+    final innerPaint = Paint()..color = Colors.white;
+
+    final borderPaint = Paint()
+      ..color = Colors.blue.withValues(alpha: 0.4)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2;
+
+    canvas.drawCircle(screenCenter, outerRadius, outerPaint);
+
+    canvas.drawCircle(screenCenter, 30, pulsePaint);
+
+    canvas.drawCircle(screenCenter, player.radius, playerPaint);
+
+    canvas.drawCircle(screenCenter, player.radius / 2, innerPaint);
+
+    canvas.drawCircle(screenCenter, outerRadius, borderPaint);
   }
 }

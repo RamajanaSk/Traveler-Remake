@@ -1,8 +1,12 @@
 import 'dart:ui';
 
+import 'package:travelerremake/features/map/coordinate_converter.dart';
 import 'package:travelerremake/features/map/models/map_object_type.dart';
 
 class OSMParser {
+  static const double originLat = 48.7758;
+  static const double originLon = 9.1829;
+
   List<MapObject> parse(Map<String, dynamic> json) {
     final elements = json["elements"] as List<dynamic>;
 
@@ -10,13 +14,21 @@ class OSMParser {
 
     for (final element in elements) {
       if (element["type"] == "node") {
+        final world = CoordinateConverter.toWorld(
+          element["lat"],
+          element["lon"],
+          originLat,
+          originLon,
+        );
+
         nodes[element["id"]] = GeoPoint(
           lat: element["lat"],
           lon: element["lon"],
+          worldX: world.x,
+          worldY: world.y,
         );
       }
     }
-
     final result = <MapObject>[];
 
     for (final element in elements) {
@@ -116,6 +128,50 @@ class OSMParser {
         result.add(
           MapObject(
             type: MapObjectType.park,
+            points: points,
+            height: 0,
+            bounds: bounds,
+            center: Offset(centerLon, centerLat),
+            id: element['id'].toString(),
+            name: element['tags']?['name'],
+            tags: element['tags'] ?? {},
+          ),
+        );
+      }
+      if (tags["landuse"] == "grass" ||
+          tags["landuse"] == "meadow" ||
+          tags["natural"] == "grassland") {
+        result.add(
+          MapObject(
+            type: MapObjectType.park,
+            points: points,
+            height: 0,
+            bounds: bounds,
+            center: Offset(centerLon, centerLat),
+            id: element['id'].toString(),
+            name: element['tags']?['name'],
+            tags: element['tags'] ?? {},
+          ),
+        );
+      }
+      if (tags["natural"] == "water" || tags["water"] != null) {
+        result.add(
+          MapObject(
+            type: MapObjectType.water,
+            points: points,
+            height: 0,
+            bounds: bounds,
+            center: Offset(centerLon, centerLat),
+            id: element['id'].toString(),
+            name: element['tags']?['name'],
+            tags: element['tags'] ?? {},
+          ),
+        );
+      }
+      if (tags["railway"] != null) {
+        result.add(
+          MapObject(
+            type: MapObjectType.railway,
             points: points,
             height: 0,
             bounds: bounds,

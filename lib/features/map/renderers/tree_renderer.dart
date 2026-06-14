@@ -14,8 +14,8 @@ class TreeRenderer {
     final pos = converter.convert(object.points.first);
 
     final treeColor = Color.lerp(
-      Colors.green.shade900,
-      Colors.lime,
+      const Color.fromARGB(255, 255, 255, 255),
+      const Color.fromARGB(255, 93, 255, 98),
       object.discoveryProgress,
     )!;
 

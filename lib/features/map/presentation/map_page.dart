@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:travelerremake/features/map/controller/map_controller.dart';
+import 'package:travelerremake/core/services/app_services.dart';
+import 'package:travelerremake/core/widgets/loading_widget.dart';
+
 import 'package:travelerremake/features/map/models/camera_state.dart';
 import 'package:travelerremake/features/map/models/map_object_type.dart';
 import 'package:travelerremake/features/map/models/player.dart';
+import 'package:travelerremake/features/map/presentation/widgets/level_card.dart';
+import 'package:travelerremake/features/map/presentation/widgets/map_error_widget.dart';
 
-import 'package:travelerremake/features/map/osm_parser.dart';
-import 'package:travelerremake/features/map/osm_service/osm_service.dart';
 import 'package:travelerremake/features/map/presentation/widgets/map_viewport.dart';
 import 'package:travelerremake/features/map/services/chunk_loader.dart';
 
@@ -16,96 +18,76 @@ class MapPage extends StatefulWidget {
   State<MapPage> createState() => _MapPageState();
 }
 
-class _MapPageState extends State<MapPage> {
-  final controller = MapController(service: OSMService(), parser: OSMParser());
+class _MapPageState extends State<MapPage> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
 
-  final camera = CameraState(position: const Offset(1500, 1500), zoom: 1);
-  final player = Player(position: const Offset(1500, 1500));
+  final controller = AppServices.mapController;
+  final camera = CameraState(position: const Offset(0, 0), zoom: 0.5);
+  final player = Player(worldPosition: const Offset(0, 0));
 
   double currentLat = 48.7758;
   double currentLon = 9.1829;
 
-  bool loading = true;
-
-  int get discoveredBuildings {
-    return controller.worldObjects
-        .where((o) => o.type == MapObjectType.building && o.discovered)
-        .length;
-  }
-
-  int get discoveredRoads {
-    return controller.worldObjects
-        .where((o) => o.type == MapObjectType.road && o.discovered)
-        .length;
-  }
-
-  int get xp => discoveredBuildings * 10;
-
-  int get level => (xp ~/ 100) + 1;
-
-  double get levelProgress {
-    final currentLevelXp = (level - 1) * 100;
-    return (xp - currentLevelXp) / 100;
-  }
+  bool loading = false;
+  String? errorMessage;
 
   @override
   void initState() {
     super.initState();
-    loadWorld();
-  }
-
-  Future<void> loadWorld() async {
-    await controller.loadChunk(lat: currentLat, lon: currentLon);
-
-    setState(() {
-      loading = false;
-    });
   }
 
   Future<void> checkChunks() async {
-    await ChunkLoader.check(
-      cameraPosition: camera.position,
-      currentLat: currentLat,
-      currentLon: currentLon,
-      loadChunk: (lat, lon) {
-        return controller.loadChunk(lat: lat, lon: lon);
-      },
-    );
+    try {
+      await ChunkLoader.check(
+        cameraPosition: camera.position,
+        currentLat: currentLat,
+        currentLon: currentLon,
+        loadChunk: (lat, lon) {
+          return controller.loadChunk(lat: lat, lon: lon);
+        },
+      );
+    } catch (e) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString()), backgroundColor: Colors.red),
+      );
+    }
+  }
+
+  Future<void> retry() async {
+    setState(() {
+      loading = true;
+      errorMessage = null;
+    });
+
+    //await loadWorld();
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     if (loading) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      return const MapLoadingWidget();
+    }
+
+    if (errorMessage != null) {
+      return MapErrorWidget(errorMessage: errorMessage!, onRetry: retry);
     }
 
     return AnimatedBuilder(
       animation: controller,
       builder: (_, __) {
+        final stats = controller.stats;
         return Scaffold(
-          appBar: AppBar(
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Level $level • XP $xp",
-                  style: const TextStyle(fontSize: 18),
-                ),
-                Text(
-                  "$discoveredBuildings Buildings",
-                  style: const TextStyle(fontSize: 12),
-                ),
-                Text(
-                  "$discoveredRoads Roads",
-                  style: const TextStyle(fontSize: 12),
-                ),
-              ],
-            ),
-            bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(6),
-              child: LinearProgressIndicator(
-                value: levelProgress,
-                minHeight: 6,
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(370),
+            child: SafeArea(
+              child: LevelCard(
+                level: stats.level,
+                currentXp: stats.currentLevelXp,
+                maxXp: stats.maxLevelXp,
               ),
             ),
           ),
@@ -116,7 +98,9 @@ class _MapPageState extends State<MapPage> {
             onCameraChanged: () async {
               await checkChunks();
 
-              setState(() {});
+              if (mounted) {
+                setState(() {});
+              }
             },
           ),
         );

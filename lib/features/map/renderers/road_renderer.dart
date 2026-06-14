@@ -22,8 +22,8 @@ class RoadRenderer {
     }
 
     final roadColor = Color.lerp(
-      Colors.grey,
-      Colors.green,
+      Colors.white.withValues(alpha: 0.8),
+      const Color.fromARGB(255, 93, 255, 98),
       object.discoveryProgress,
     )!;
 
@@ -31,7 +31,7 @@ class RoadRenderer {
       path,
       Paint()
         ..color = roadColor
-        ..strokeWidth = 2 / zoom
+        ..strokeWidth = 50
         ..style = PaintingStyle.stroke,
     );
   }
