@@ -17,7 +17,7 @@ class _LiveIndicatorState extends State<LiveIndicator>
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1200),
+      duration: const Duration(milliseconds: 1800),
     )..repeat(reverse: true);
   }
 
@@ -32,25 +32,32 @@ class _LiveIndicatorState extends State<LiveIndicator>
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, child) {
-        final scale = 0.7 + (_controller.value * 0.1);
+        final opacity = 0.7 + (_controller.value * 0.3);
 
-        return Transform.scale(
-          scale: scale,
-          child: Container(
-            width: 10,
-            height: 10,
-            decoration: BoxDecoration(
-              color: const Color(0xFF00FF88),
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFF00FF88).withValues(alpha: 0.6),
-                  blurRadius: 12,
-                  spreadRadius: _controller.value * 6,
-                ),
-              ],
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 10,
+              height: 10,
+              decoration: BoxDecoration(
+                color: const Color(0xFF58B5F6).withValues(alpha: opacity),
+                shape: BoxShape.circle,
+              ),
             ),
-          ),
+
+            const SizedBox(width: 8),
+
+            Text(
+              'LIVE',
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 1,
+                color: Colors.white.withValues(alpha: 0.85),
+              ),
+            ),
+          ],
         );
       },
     );

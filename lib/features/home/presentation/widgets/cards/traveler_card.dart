@@ -2,29 +2,27 @@ import 'package:flutter/material.dart';
 
 class TravelerCard extends StatelessWidget {
   final Widget child;
+  final Color? color;
+  final Color? borderColor;
 
-  const TravelerCard({super.key, required this.child});
+  const TravelerCard({
+    super.key,
+    required this.child,
+    this.color,
+    this.borderColor,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
-
-      padding: const EdgeInsets.all(20),
-
+      padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-
-        border: Border.all(color: Colors.white.withValues(alpha: 0.10)),
-        boxShadow: [
-          BoxShadow(
-            color: const Color.fromARGB(255, 36, 36, 36),
-            blurRadius: 1,
-            spreadRadius: 1,
-          ),
-        ],
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: borderColor ?? Colors.white.withValues(alpha: 0.04),
+        ),
       ),
-
       child: child,
     );
   }

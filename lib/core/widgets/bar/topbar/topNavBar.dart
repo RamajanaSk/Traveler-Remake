@@ -39,6 +39,7 @@ class TopNavBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         title,
         style: TopNavBarDecoration.getTitleTextStyle().copyWith(
+          fontSize: 24,
           color: theme.colorScheme.onSurface,
         ),
       ),

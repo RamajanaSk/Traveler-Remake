@@ -5,8 +5,8 @@ import 'package:travelerremake/core/widgets/panel/sidePanelWidget.dart';
 import 'package:travelerremake/features/home/presentation/sections/home_cover_section.dart';
 import 'package:travelerremake/features/home/presentation/widgets/cards/current_location_card.dart';
 import 'package:travelerremake/features/home/presentation/widgets/cards/daily_streak_card.dart';
+import 'package:travelerremake/features/home/presentation/widgets/cards/discovery_badge_card.dart';
 import 'package:travelerremake/features/home/presentation/widgets/cards/live_explorer_card.dart';
-import 'package:travelerremake/features/home/presentation/widgets/cards/live_travelers_card.dart';
 import 'package:travelerremake/features/home/presentation/widgets/cards/map_progress_card.dart';
 import 'package:travelerremake/features/home/presentation/widgets/cards/random_quest_card.dart';
 import 'package:travelerremake/features/home/presentation/widgets/cards/todays_challenge_card.dart';
@@ -98,38 +98,143 @@ class HomePage extends StatelessWidget {
           print('Profile');
         },
       ),
-      body: AppBackgroundGradient(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(18),
-          child: Column(
-            children: [
-              HomeCoverSection(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(18),
+        child: Column(
+          children: [
+            const HomeCoverSection(),
 
-              const SizedBox(height: 20),
+            const SizedBox(height: 24),
 
-              const LiveExplorerCard(),
+            Text(
+              "ACTIVE EXPLORATION",
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 1.5,
+                color: Colors.white.withValues(alpha: 0.5),
+              ),
+            ),
 
-              const SizedBox(height: 20),
+            const SizedBox(height: 16),
 
-              const TodaysChallengeCard(),
+            Row(
+              children: [
+                Expanded(
+                  child: DiscoveryBadgeCard(
+                    icon: Icons.apartment,
+                    iconColor: const Color(0xFF58B5F6),
+                    title: "Buildings",
+                    discovered: 127,
+                    nextBadgeGoal: 250,
+                    badgeName: "City Explorer",
+                  ),
+                ),
 
-              const SizedBox(height: 20),
+                const SizedBox(width: 16),
 
-              const MapProgressCard(),
+                Expanded(
+                  child: DiscoveryBadgeCard(
+                    icon: Icons.park,
+                    iconColor: const Color(0xFF22C55E),
+                    title: "Parks",
+                    discovered: 42,
+                    nextBadgeGoal: 50,
+                    badgeName: "Nature Lover",
+                  ),
+                ),
 
-              const SizedBox(height: 20),
+                const SizedBox(width: 16),
 
-              const CurrentLocationCard(),
+                Expanded(
+                  child: DiscoveryBadgeCard(
+                    icon: Icons.route,
+                    iconColor: const Color(0xFFF59E0B),
+                    title: "Roads",
+                    discovered: 812,
+                    nextBadgeGoal: 1000,
+                    badgeName: "Road Walker",
+                  ),
+                ),
+              ],
+            ),
 
-              const SizedBox(height: 20),
+            const RandomQuestCard(),
 
-              const DailyStreakCard(),
+            const SizedBox(height: 20),
 
-              const SizedBox(height: 20),
+            const LiveExplorerCard(),
 
-              const RandomQuestCard(),
-            ],
-          ),
+            const SizedBox(height: 20),
+
+            const TodaysChallengeCard(),
+
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: DiscoveryBadgeCard(
+                    icon: Icons.apartment,
+                    iconColor: const Color(0xFF58B5F6),
+                    title: "Buildings",
+                    discovered: 127,
+                    nextBadgeGoal: 250,
+                    badgeName: "City Explorer",
+                  ),
+                ),
+
+                const SizedBox(width: 16),
+
+                Expanded(
+                  child: DiscoveryBadgeCard(
+                    icon: Icons.park,
+                    iconColor: const Color(0xFF22C55E),
+                    title: "Parks",
+                    discovered: 42,
+                    nextBadgeGoal: 50,
+                    badgeName: "Nature Lover",
+                  ),
+                ),
+
+                const SizedBox(width: 16),
+
+                Expanded(
+                  child: DiscoveryBadgeCard(
+                    icon: Icons.route,
+                    iconColor: const Color(0xFFF59E0B),
+                    title: "Roads",
+                    discovered: 812,
+                    nextBadgeGoal: 1000,
+                    badgeName: "Road Walker",
+                  ),
+                ),
+              ],
+            ),
+
+            Row(
+              children: [
+                const Expanded(child: MapProgressCard()),
+
+                const SizedBox(width: 16),
+
+                const Expanded(
+                  child: AreaProgressCard(
+                    areaName: 'Stuttgart',
+                    discovered: 12,
+                    total: 122,
+                  ),
+                ),
+
+                const SizedBox(width: 16),
+
+                const Expanded(child: DailyStreakCard()),
+              ],
+            ),
+
+            const SizedBox(height: 20),
+
+            const RandomQuestCard(),
+          ],
         ),
       ),
     );

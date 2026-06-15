@@ -24,8 +24,8 @@ class LevelCard extends StatelessWidget {
 
           return Container(
             decoration: BoxDecoration(
-              //color: const Color(0xFFF1F1F1),
-              borderRadius: BorderRadius.circular(16),
+              color: const Color.fromARGB(255, 0, 0, 0),
+              borderRadius: BorderRadius.circular(0),
             ),
             child: Column(
               children: [
@@ -41,8 +41,14 @@ class LevelCard extends StatelessWidget {
                           width: h * 0.55,
                           height: h * 0.55,
                           decoration: BoxDecoration(
-                            color: Colors.lightBlue,
-                            borderRadius: BorderRadius.circular(8),
+                            color: const Color(
+                              0xFF00D4FF,
+                            ).withValues(alpha: 0.15),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Icon(
+                            Icons.travel_explore,
+                            color: Color(0xFF00D4FF),
                           ),
                         ),
 
