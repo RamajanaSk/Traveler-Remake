@@ -31,6 +31,9 @@ class UserPreviewSheet extends StatelessWidget {
 
           const UserActionButtons(),
           SizedBox(height: 15),
+          SizedBox(height: 15),
+          SizedBox(height: 15),
+          SizedBox(height: 15),
         ],
       ),
     );
