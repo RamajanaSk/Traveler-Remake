@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:travelerremake/core/services/app_services.dart';
 import 'package:travelerremake/core/theme/app_theme.dart';
 import 'package:travelerremake/core/widgets/bar/bottombar/traveler_bottom_bar.dart';
+import 'package:travelerremake/features/auth/presentation/pages/start_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await AppServices.mapController.loadChunk(lat: 48.7758, lon: 9.1829);
-
   runApp(const TravelerApp());
+  //await AppServices.mapController.loadChunk(lat: 48.7758, lon: 9.1829);
 }
 
 class TravelerApp extends StatelessWidget {
@@ -21,7 +21,8 @@ class TravelerApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
-      home: TravelerBottomBar(username: 'Ramajana', userId: '123'),
+      //home: TravelerBottomBar(username: 'Ramajana', userId: '123'),
+      home: StartPage(),
     );
   }
 }

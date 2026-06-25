@@ -13,15 +13,10 @@ class CalendarDateSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: CalendarDays(
-          lastDay: DateTime.now(),
-          selectedDate: selectedDate,
-          onSelectDate: onSelectDate,
-        ),
-      ),
+    return CalendarDays(
+      lastDay: DateTime.now(),
+      selectedDate: selectedDate,
+      onSelectDate: onSelectDate,
     );
   }
 }

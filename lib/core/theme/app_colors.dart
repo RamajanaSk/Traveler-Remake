@@ -37,4 +37,14 @@ class AppColors {
   static const Color startGradientColor = Color(0xFF6A11CB);
   static const Color middleGradientColor = Color(0xFF2575FC);
   static const Color endGradientColor = Color(0xFF00D4FF);
+
+  static const purple = Color(0xFF6A3CFF);
+  static const blue = Color(0xFF3A7BFF);
+  static const cyan = Color(0xFF2EE6E6);
+
+  static const LinearGradient travelerGradient = LinearGradient(
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+    colors: [purple, blue, cyan],
+  );
 }

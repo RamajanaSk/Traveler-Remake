@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travelerremake/features/discover/presentation/pages/camera_page.dart';
 import 'package:travelerremake/features/discover/presentation/widgets/qr_button.dart';
 
 class DiscoverSearchBar extends StatelessWidget {
@@ -43,7 +44,14 @@ class DiscoverSearchBar extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 10),
-        const QrButton(),
+        QrButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const CameraPage()),
+            );
+          },
+        ),
       ],
     );
   }

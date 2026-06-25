@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'dart:ui' show Offset;
 
 class ChunkLoader {
   static Future<void> check({
@@ -7,22 +7,27 @@ class ChunkLoader {
     required double currentLat,
     required double currentLon,
   }) async {
-    const movementStep = 0.01;
+    const step = 0.01;
+
+    double? lat;
+    double? lon;
 
     if (cameraPosition.dy < 500) {
-      await loadChunk(currentLat + movementStep, currentLon);
+      lat = currentLat + step;
+      lon = currentLon;
+    } else if (cameraPosition.dy > 2500) {
+      lat = currentLat - step;
+      lon = currentLon;
+    } else if (cameraPosition.dx < 500) {
+      lat = currentLat;
+      lon = currentLon - step;
+    } else if (cameraPosition.dx > 2500) {
+      lat = currentLat;
+      lon = currentLon + step;
     }
 
-    if (cameraPosition.dy > 2500) {
-      await loadChunk(currentLat - movementStep, currentLon);
-    }
-
-    if (cameraPosition.dx < 500) {
-      await loadChunk(currentLat, currentLon - movementStep);
-    }
-
-    if (cameraPosition.dx > 2500) {
-      await loadChunk(currentLat, currentLon + movementStep);
+    if (lat != null && lon != null) {
+      await loadChunk(lat, lon);
     }
   }
 }
