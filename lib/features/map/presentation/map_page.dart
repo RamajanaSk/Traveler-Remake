@@ -23,7 +23,7 @@ class _MapPageState extends State<MapPage> with AutomaticKeepAliveClientMixin {
   bool get wantKeepAlive => true;
 
   final controller = AppServices.mapController;
-  final camera = CameraState(position: const Offset(0, 0), zoom: 0.5);
+  final camera = CameraState(position: const Offset(0, 0), zoom: 0.02);
   final player = Player(worldPosition: const Offset(0, 0));
 
   double currentLat = 48.7758;

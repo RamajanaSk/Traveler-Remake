@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:travelerremake/core/theme/app_background_gradient.dart';
-import 'package:travelerremake/core/theme/space_background.dart';
 import 'package:travelerremake/core/widgets/bar/topbar/topNavBar.dart';
 import 'package:travelerremake/core/widgets/panel/sidePanelWidget.dart';
 import 'package:travelerremake/features/home/presentation/sections/home_cover_section.dart';
@@ -99,132 +98,143 @@ class HomePage extends StatelessWidget {
           print('Profile');
         },
       ),
-      body: SpaceBackground(
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(18),
+        child: Column(
+          children: [
+            const HomeCoverSection(),
+
+            const SizedBox(height: 24),
+
+            Text(
+              "ACTIVE EXPLORATION",
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 1.5,
+                color: Colors.white.withValues(alpha: 0.5),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            Row(
               children: [
-                const Spacer(flex: 7),
-
-                Hero(
-                  tag: "logo",
-                  child: Center(
-                    child: Image.asset("assets/logo.png", width: 170),
+                Expanded(
+                  child: DiscoveryBadgeCard(
+                    icon: Icons.apartment,
+                    iconColor: const Color(0xFF58B5F6),
+                    title: "Buildings",
+                    discovered: 127,
+                    nextBadgeGoal: 250,
+                    badgeName: "City Explorer",
                   ),
                 ),
 
-                const Spacer(flex: 3),
+                const SizedBox(width: 16),
 
-                const Text(
-                  "TRAVELER",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 46,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 1.5,
-                    height: 0.95,
+                Expanded(
+                  child: DiscoveryBadgeCard(
+                    icon: Icons.park,
+                    iconColor: const Color(0xFF22C55E),
+                    title: "Parks",
+                    discovered: 42,
+                    nextBadgeGoal: 50,
+                    badgeName: "Nature Lover",
                   ),
                 ),
 
-                ShaderMask(
-                  shaderCallback: (bounds) {
-                    return const LinearGradient(
-                      colors: [
-                        Color(0xffFF2BD6),
-                        Color(0xffA14DFF),
-                        Color(0xff2EDBFF),
-                      ],
-                    ).createShader(bounds);
-                  },
-                  child: const Text(
-                    "START",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 46,
-                      fontWeight: FontWeight.w900,
-                      height: 0.95,
-                    ),
+                const SizedBox(width: 16),
+
+                Expanded(
+                  child: DiscoveryBadgeCard(
+                    icon: Icons.route,
+                    iconColor: const Color(0xFFF59E0B),
+                    title: "Roads",
+                    discovered: 812,
+                    nextBadgeGoal: 1000,
+                    badgeName: "Road Walker",
                   ),
                 ),
-
-                ShaderMask(
-                  shaderCallback: (bounds) {
-                    return const LinearGradient(
-                      colors: [Color(0xffA14DFF), Color(0xff2EDBFF)],
-                    ).createShader(bounds);
-                  },
-                  child: const Text(
-                    "DISCOVERING",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 46,
-                      fontWeight: FontWeight.w900,
-                      height: 0.95,
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 26),
-
-                Container(
-                  width: 60,
-                  height: 2,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    gradient: const LinearGradient(
-                      colors: [Color(0xffFF2BD6), Color(0xff2EDBFF)],
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 22),
-
-                Text(
-                  "The best stories are never planned.\nThey begin the moment you step outside.",
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(.72),
-                    fontSize: 18,
-                    height: 1.6,
-                  ),
-                ),
-
-                const Spacer(),
-
-                Row(
-                  children: [
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        "Sign In",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 18),
-                    Container(width: 1, height: 16, color: Colors.white24),
-                    const SizedBox(width: 18),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "Continue as Guest",
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(.55),
-                          fontSize: 17,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 32),
               ],
             ),
-          ),
+
+            const RandomQuestCard(),
+
+            const SizedBox(height: 20),
+
+            const LiveExplorerCard(),
+
+            const SizedBox(height: 20),
+
+            const TodaysChallengeCard(),
+
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: DiscoveryBadgeCard(
+                    icon: Icons.apartment,
+                    iconColor: const Color(0xFF58B5F6),
+                    title: "Buildings",
+                    discovered: 127,
+                    nextBadgeGoal: 250,
+                    badgeName: "City Explorer",
+                  ),
+                ),
+
+                const SizedBox(width: 16),
+
+                Expanded(
+                  child: DiscoveryBadgeCard(
+                    icon: Icons.park,
+                    iconColor: const Color(0xFF22C55E),
+                    title: "Parks",
+                    discovered: 42,
+                    nextBadgeGoal: 50,
+                    badgeName: "Nature Lover",
+                  ),
+                ),
+
+                const SizedBox(width: 16),
+
+                Expanded(
+                  child: DiscoveryBadgeCard(
+                    icon: Icons.route,
+                    iconColor: const Color(0xFFF59E0B),
+                    title: "Roads",
+                    discovered: 812,
+                    nextBadgeGoal: 1000,
+                    badgeName: "Road Walker",
+                  ),
+                ),
+              ],
+            ),
+
+            Row(
+              children: [
+                const Expanded(child: MapProgressCard()),
+
+                const SizedBox(width: 16),
+
+                const Expanded(
+                  child: AreaProgressCard(
+                    areaName: 'Stuttgart',
+                    discovered: 12,
+                    total: 122,
+                  ),
+                ),
+
+                const SizedBox(width: 16),
+
+                const Expanded(child: DailyStreakCard()),
+              ],
+            ),
+
+            const SizedBox(height: 20),
+
+            const RandomQuestCard(),
+          ],
         ),
       ),
     );

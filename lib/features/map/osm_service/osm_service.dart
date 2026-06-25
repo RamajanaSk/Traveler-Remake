@@ -58,7 +58,16 @@ class OSMService {
 out body;
 """;
 
-      final response = await http.post(Uri.parse(overpassUrl), body: query);
+      final response = await http.post(
+        Uri.parse(overpassUrl),
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "text/plain",
+          "User-Agent": "Traveler (mydomain.de)",
+          "Referer": "https://mydomain.de",
+        },
+        body: query,
+      );
 
       if (response.statusCode != 200) {
         throw Exception("Overpass Error: ${response.statusCode}");
@@ -69,8 +78,11 @@ out body;
       print("Elements: ${json["elements"]?.length}");
 
       return json;
-    } catch (e) {
-      throw Exception("Failed to fetch OSM data: $e");
+    } catch (e, st) {
+      print("========== OSM ERROR ==========");
+      print(e);
+      print(st);
+      rethrow;
     }
   }
 }

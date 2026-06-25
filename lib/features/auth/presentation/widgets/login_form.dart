@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travelerremake/core/text/gradient_title.dart';
 import 'package:travelerremake/core/theme/app_colors.dart';
 import 'package:travelerremake/core/widgets/app_button.dart';
+import 'package:travelerremake/core/widgets/bar/bottombar/traveler_bottom_bar.dart';
 import 'package:travelerremake/core/widgets/inputs/app_text_field.dart';
 import 'package:travelerremake/core/widgets/divider/line_divider.dart';
 import 'package:travelerremake/features/auth/presentation/pages/register_page.dart';
@@ -27,10 +28,17 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void _login() {
-    if (_formKey.currentState!.validate()) {
-      debugPrint(_usernameController.text);
-      debugPrint(_passwordController.text);
-    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => TravelerBottomBar(username: 'Ramajana', userId: '123'),
+      ),
+    );
+
+    //if (_formKey.currentState!.validate()) {
+    //debugPrint(_usernameController.text);
+    //debugPrint(_passwordController.text);
+    // }
   }
 
   @override

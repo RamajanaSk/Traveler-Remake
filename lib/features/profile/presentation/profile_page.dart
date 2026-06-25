@@ -13,7 +13,16 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Statistics')),
+      drawer: const SidePanel(),
+
+      appBar: TopNavBar(
+        title: 'PROFILE',
+
+        trailingIcon1: Icons.logout,
+        trailingOnPressed1: () {
+          print('Logout');
+        },
+      ),
       body: TravelerExplorerOverview(),
     );
   }

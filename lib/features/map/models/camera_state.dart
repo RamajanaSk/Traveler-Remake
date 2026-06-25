@@ -11,12 +11,12 @@ class CameraState {
   }
 
   void zoomIn() {
-    zoom *= 1.15;
-    zoom = zoom.clamp(0.01, 10.0);
+    zoom *= 1.10;
+    zoom = zoom.clamp(0.25, 0.60);
   }
 
   void zoomOut() {
-    zoom *= 0.85;
-    zoom = zoom.clamp(0.01, 10.0);
+    zoom *= 0.90;
+    zoom = zoom.clamp(0.25, 0.60);
   }
 }
