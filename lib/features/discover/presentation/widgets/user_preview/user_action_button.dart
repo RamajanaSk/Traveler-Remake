@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travelerremake/core/widgets/button/app_action_button.dart';
 
 class UserActionButtons extends StatelessWidget {
   const UserActionButtons({super.key});
@@ -8,20 +9,20 @@ class UserActionButtons extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: FilledButton.icon(
+          child: AppActionButton(
+            text: "Add Friend",
+            icon: Icons.person_add_alt_1,
+            filled: true,
             onPressed: () {},
-            icon: const Icon(Icons.person_add_alt_1),
-            label: const Text("Add Friend"),
           ),
         ),
-
-        const SizedBox(width: 12),
-
+        const SizedBox(width: 14),
         Expanded(
-          child: OutlinedButton.icon(
+          child: AppActionButton(
+            text: "View Profile",
+            icon: Icons.person_outline,
+            filled: false,
             onPressed: () {},
-            icon: const Icon(Icons.person_outline),
-            label: const Text("View Profile"),
           ),
         ),
       ],

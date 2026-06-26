@@ -18,22 +18,24 @@ class UserPreviewSheet extends StatelessWidget {
       child: Column(
         children: [
           UserAvatar(username: user.username),
-          SizedBox(height: 15),
+          const SizedBox(height: 18),
+
+          Text(user.username, style: Theme.of(context).textTheme.headlineSmall),
+
+          const SizedBox(height: 8),
 
           UserLevelBadge(level: user.level),
-          SizedBox(height: 15),
 
-          UserInfoRow(user: user),
-          SizedBox(height: 15),
+          const SizedBox(height: 18),
 
+          //UserInfoRow(user: user),
+
+          //const SizedBox(height: 28),
           const UserStatsCard(),
-          SizedBox(height: 15),
+
+          const SizedBox(height: 28),
 
           const UserActionButtons(),
-          SizedBox(height: 15),
-          SizedBox(height: 15),
-          SizedBox(height: 15),
-          SizedBox(height: 15),
         ],
       ),
     );

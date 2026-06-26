@@ -10,20 +10,29 @@ class UserInfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        InfoCard(
-          icon: Icons.location_on_outlined,
-          value: user.cityName,
-          label: "City",
+        Expanded(
+          child: InfoCard(
+            icon: Icons.location_on_outlined,
+            value: user.cityName,
+            label: "City",
+          ),
         ),
-
-        InfoCard(icon: Icons.public, value: user.countryName, label: "Country"),
-
-        InfoCard(
-          icon: Icons.near_me,
-          value: "${user.distance.toStringAsFixed(1)} km",
-          label: "Away",
+        const SizedBox(width: 12),
+        Expanded(
+          child: InfoCard(
+            icon: Icons.public,
+            value: user.countryName,
+            label: "Country",
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: InfoCard(
+            icon: Icons.near_me_rounded,
+            value: "${user.distance.toStringAsFixed(1)} km",
+            label: "Away",
+          ),
         ),
       ],
     );

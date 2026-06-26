@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 */
 
 class AppColors {
-  Color logoBlue = Color.fromRGBO(49, 150, 254, 1);
-  Color logoLightPurple = Color.fromRGBO(182, 32, 228, 1);
+  Color ne = Color.fromRGBO(49, 150, 254, 1);
+  Color doch = Color.fromRGBO(182, 32, 228, 1);
   Color logoPurple = Color.fromRGBO(104, 87, 252, 1);
   Color logoRed = Color.fromRGBO(246, 81, 101, 1);
 
@@ -41,6 +41,9 @@ class AppColors {
   static const purple = Color(0xFF6A3CFF);
   static const blue = Color(0xFF3A7BFF);
   static const cyan = Color(0xFF2EE6E6);
+
+  static const primary = Color(0xFF6A3CFF);
+  static const secondary = Color(0xFF3A7BFF);
 
   static const LinearGradient travelerGradient = LinearGradient(
     begin: Alignment.centerLeft,
