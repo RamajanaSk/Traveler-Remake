@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travelerremake/core/widgets/bar/topbar/topNavBar.dart';
 import 'package:travelerremake/core/widgets/panel/sidePanelWidget.dart';
+import 'package:travelerremake/features/auth/presentation/pages/start_page.dart';
 import 'package:travelerremake/features/map/presentation/widgets/test_widget.dart';
 import 'package:travelerremake/features/profile/presentation/sections/profile_achievments_section.dart';
 import 'package:travelerremake/features/profile/presentation/sections/profile_cover_section.dart';
@@ -20,7 +21,10 @@ class ProfilePage extends StatelessWidget {
 
         trailingIcon1: Icons.logout,
         trailingOnPressed1: () {
-          print('Logout');
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => StartPage()),
+          );
         },
       ),
       body: TravelerExplorerOverview(),

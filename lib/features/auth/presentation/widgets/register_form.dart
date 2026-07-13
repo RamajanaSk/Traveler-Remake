@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travelerremake/core/text/gradient_title.dart';
 import 'package:travelerremake/core/theme/app_colors.dart';
-import 'package:travelerremake/core/widgets/app_button.dart';
+import 'package:travelerremake/core/widgets/button/app_button.dart';
 import 'package:travelerremake/core/widgets/divider/line_divider.dart';
 import 'package:travelerremake/core/widgets/inputs/app_text_field.dart';
 

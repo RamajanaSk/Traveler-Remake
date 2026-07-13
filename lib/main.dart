@@ -8,7 +8,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   runApp(const TravelerApp());
-  //await AppServices.mapController.loadChunk(lat: 48.7758, lon: 9.1829);
+  await AppServices.mapController.loadChunk(lat: 48.7758, lon: 9.1829);
 }
 
 class TravelerApp extends StatelessWidget {

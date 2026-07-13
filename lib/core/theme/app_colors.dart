@@ -10,6 +10,9 @@ class AppColors {
   Color doch = Color.fromRGBO(182, 32, 228, 1);
   Color logoPurple = Color.fromRGBO(104, 87, 252, 1);
   Color logoRed = Color.fromRGBO(246, 81, 101, 1);
+  Color logoRed1 = Color.fromRGBO(246, 81, 101, 1);
+  Color logoRed2 = Color.fromRGBO(246, 81, 101, 1);
+  Color logoRed3 = Color.fromRGBO(246, 81, 101, 1);
 
   Color background = Color.fromARGB(255, 255, 255, 255);
   Color backgroundCard = Colors.white;
