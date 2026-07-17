@@ -13,6 +13,9 @@ class TopNavBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? trailingWidget1;
   final Widget? trailingWidget2;
 
+  final Widget? leadingWidget;
+  final bool showBottomLine;
+
   const TopNavBar({
     super.key,
     required this.title,
@@ -22,10 +25,12 @@ class TopNavBar extends StatelessWidget implements PreferredSizeWidget {
     this.trailingOnPressed2,
     this.trailingWidget1,
     this.trailingWidget2,
+    this.leadingWidget,
+    this.showBottomLine = true,
   });
 
   @override
-  Size get preferredSize => const Size.fromHeight(60);
+  Size get preferredSize => Size.fromHeight(showBottomLine ? 60 : 56);
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +41,15 @@ class TopNavBar extends StatelessWidget implements PreferredSizeWidget {
       surfaceTintColor: Colors.transparent,
       elevation: 0,
 
-      title: Text(
-        title,
-        style: TopNavBarDecoration.getTitleTextStyle().copyWith(
-          fontSize: 24,
-          color: theme.colorScheme.onSurface,
-        ),
-      ),
+      title:
+          leadingWidget ??
+          Text(
+            title,
+            style: TopNavBarDecoration.getTitleTextStyle().copyWith(
+              fontSize: 24,
+              color: theme.colorScheme.onSurface,
+            ),
+          ),
 
       centerTitle: false,
 
@@ -66,14 +73,16 @@ class TopNavBar extends StatelessWidget implements PreferredSizeWidget {
           ),
       ],
 
-      bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(4),
-        child: Container(
-          height: 4,
-          width: double.infinity,
-          decoration: TopNavBarDecoration.getBoxDecoration(),
-        ),
-      ),
+      bottom: showBottomLine
+          ? PreferredSize(
+              preferredSize: const Size.fromHeight(4),
+              child: Container(
+                height: 4,
+                width: double.infinity,
+                decoration: TopNavBarDecoration.getBoxDecoration(),
+              ),
+            )
+          : null,
     );
   }
 }

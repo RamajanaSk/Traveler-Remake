@@ -10,6 +10,8 @@ import 'package:travelerremake/features/home/presentation/widgets/cards/live_exp
 import 'package:travelerremake/features/home/presentation/widgets/cards/map_progress_card.dart';
 import 'package:travelerremake/features/home/presentation/widgets/cards/random_quest_card.dart';
 import 'package:travelerremake/features/home/presentation/widgets/cards/todays_challenge_card.dart';
+import 'package:travelerremake/features/home/presentation/widgets/explorer_overview_card.dart';
+import 'package:travelerremake/features/home/presentation/widgets/hero_header.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -84,25 +86,49 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const SidePanel(),
+      /*appBar: TopNavBar(
+        title: "",
 
-      appBar: TopNavBar(
-        title: 'TRAVELER',
+        leadingWidget: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const CircleAvatar(
+              radius: 20,
+              backgroundImage: AssetImage("assets/images/profile.jpg"),
+            ),
 
-        trailingIcon1: Icons.notifications_outlined,
-        trailingOnPressed1: () {
-          print('Notifications');
-        },
+            const SizedBox(width: 12),
 
-        trailingIcon2: Icons.share,
-        trailingOnPressed2: () {
-          print('Profile');
-        },
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Text(
+                  "Good Evening",
+                  style: TextStyle(color: Colors.white70, fontSize: 12),
+                ),
+
+                Text(
+                  "Ramajana ✨",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                ),
+              ],
+            ),
+          ],
+        ),
+
+        trailingIcon1: Icons.notifications_none,
+        trailingOnPressed1: () {},
       ),
+*/
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(18),
         child: Column(
           children: [
-            const HomeCoverSection(),
+            const HomeHeroHeader(),
+            //const HomeCoverSection(), Adnevture starts outside
+            const SizedBox(height: 24),
+            const ExplorerOverviewCard(),
 
             const SizedBox(height: 24),
 
@@ -234,6 +260,12 @@ class HomePage extends StatelessWidget {
             const SizedBox(height: 20),
 
             const RandomQuestCard(),
+
+            const HomeHeroHeader(),
+
+            const ExplorerOverviewCard(),
+
+            const SizedBox(height: 60),
           ],
         ),
       ),
