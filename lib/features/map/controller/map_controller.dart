@@ -29,6 +29,8 @@ class MapController extends ChangeNotifier {
   bool isLoadingChunks = false;
   String? errorMessage;
 
+  bool _initialized = false;
+
   bool _requestInProgress = false;
 
   Future<void> initialize() async {
@@ -76,12 +78,13 @@ class MapController extends ChangeNotifier {
 
     _requestInProgress = true;
 
-    if (loadingState == LoadingState.initialLoading) {
-      notifyListeners();
+    if (!_initialized) {
+      loadingState = LoadingState.initialLoading;
     } else {
       isLoadingChunks = true;
-      notifyListeners();
     }
+
+    notifyListeners();
 
     loadedChunks.add(chunkKey);
 
@@ -107,6 +110,7 @@ class MapController extends ChangeNotifier {
       loadingState = LoadingState.ready;
       isLoadingChunks = false;
       errorMessage = null;
+      _initialized = true;
 
       notifyListeners();
 
@@ -119,11 +123,14 @@ class MapController extends ChangeNotifier {
       isLoadingChunks = false;
       errorMessage = e.toString();
 
-      loadingState = LoadingState.error;
+      if (!_initialized) {
+        loadingState = LoadingState.error;
+      }
 
       notifyListeners();
-
       debugPrint("Chunk $chunkKey failed: $e");
+
+      rethrow;
     } finally {
       _requestInProgress = false;
     }

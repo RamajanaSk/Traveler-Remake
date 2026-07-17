@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:travelerremake/core/services/app_services.dart';
 import 'package:travelerremake/core/widgets/loading_widget.dart';
-
 import 'package:travelerremake/features/map/models/camera_state.dart';
-import 'package:travelerremake/features/map/models/map_object_type.dart';
+import 'package:travelerremake/features/map/models/loading_state.dart';
 import 'package:travelerremake/features/map/models/player.dart';
 import 'package:travelerremake/features/map/presentation/widgets/level_card.dart';
 import 'package:travelerremake/features/map/presentation/widgets/map_error_widget.dart';
+import 'package:travelerremake/features/map/presentation/widgets/map_loading_indicator.dart';
 
 import 'package:travelerremake/features/map/presentation/widgets/map_viewport.dart';
 import 'package:travelerremake/features/map/services/chunk_loader.dart';
@@ -32,12 +32,18 @@ class _MapPageState extends State<MapPage> with AutomaticKeepAliveClientMixin {
   bool loading = false;
   String? errorMessage;
 
+  bool _checkingChunks = false;
+
   @override
   void initState() {
     super.initState();
   }
 
   Future<void> checkChunks() async {
+    if (_checkingChunks) return;
+
+    _checkingChunks = true;
+
     try {
       await ChunkLoader.check(
         cameraPosition: camera.position,
@@ -53,6 +59,8 @@ class _MapPageState extends State<MapPage> with AutomaticKeepAliveClientMixin {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(e.toString()), backgroundColor: Colors.red),
       );
+    } finally {
+      _checkingChunks = false;
     }
   }
 
@@ -65,21 +73,33 @@ class _MapPageState extends State<MapPage> with AutomaticKeepAliveClientMixin {
     //await loadWorld();
   }
 
+  Future<void> retryNew() async {
+    await controller.retryChunk(lat: currentLat, lon: currentLon);
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    if (loading) {
-      return const MapLoadingWidget();
-    }
-
-    if (errorMessage != null) {
-      return MapErrorWidget(errorMessage: errorMessage!, onRetry: retry);
-    }
 
     return AnimatedBuilder(
       animation: controller,
       builder: (_, __) {
+        switch (controller.loadingState) {
+          case LoadingState.initialLoading:
+            return const MapLoadingWidget();
+
+          case LoadingState.error:
+            return MapErrorWidget(
+              errorMessage: controller.errorMessage!,
+              onRetry: retryNew,
+            );
+
+          case LoadingState.ready:
+            break;
+        }
+
         final stats = controller.stats;
+
         return Scaffold(
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(370),
@@ -91,17 +111,23 @@ class _MapPageState extends State<MapPage> with AutomaticKeepAliveClientMixin {
               ),
             ),
           ),
-          body: MapViewport(
-            controller: controller,
-            camera: camera,
-            player: player,
-            onCameraChanged: () async {
-              await checkChunks();
+          body: Stack(
+            children: [
+              MapViewport(
+                controller: controller,
+                camera: camera,
+                player: player,
+                onCameraChanged: () async {
+                  await checkChunks();
 
-              if (mounted) {
-                setState(() {});
-              }
-            },
+                  if (mounted) {
+                    setState(() {});
+                  }
+                },
+              ),
+
+              if (controller.isLoadingChunks) const MapLoadingIndicator(),
+            ],
           ),
         );
       },
