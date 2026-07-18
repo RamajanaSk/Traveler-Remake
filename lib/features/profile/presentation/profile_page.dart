@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travelerremake/core/widgets/bar/topbar/topNavBar.dart';
 import 'package:travelerremake/core/widgets/panel/sidePanelWidget.dart';
 import 'package:travelerremake/features/auth/presentation/pages/start_page.dart';
-import 'package:travelerremake/features/map/presentation/widgets/test_widget.dart';
-import 'package:travelerremake/features/profile/presentation/sections/profile_achievments_section.dart';
-import 'package:travelerremake/features/profile/presentation/sections/profile_cover_section.dart';
-import 'package:travelerremake/features/profile/presentation/sections/profile_stats_section.dart';
-import 'package:travelerremake/features/profile/presentation/sections/profile_progress_section.dart';
+import 'package:travelerremake/features/profile/presentation/widgets/explorer_level_card.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -17,17 +13,36 @@ class ProfilePage extends StatelessWidget {
       drawer: const SidePanel(),
 
       appBar: TopNavBar(
-        title: 'PROFILE',
-
+        title: "PROFILE",
         trailingIcon1: Icons.logout,
         trailingOnPressed1: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => StartPage()),
+            MaterialPageRoute(builder: (_) => const StartPage()),
           );
         },
       ),
-      body: TravelerExplorerOverview(),
+
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(18),
+        child: Column(
+          children: const [
+            ExplorerLevelCard(),
+
+            SizedBox(height: 20),
+
+            // ProfileProgressSection(),
+
+            // SizedBox(height: 20),
+
+            // ProfileAchievementsSection(),
+
+            // SizedBox(height: 20),
+
+            // ProfileStatsSection(),
+          ],
+        ),
+      ),
     );
   }
 }

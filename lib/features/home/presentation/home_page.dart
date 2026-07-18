@@ -3,14 +3,17 @@ import 'package:travelerremake/core/theme/app_background_gradient.dart';
 import 'package:travelerremake/core/widgets/bar/topbar/topNavBar.dart';
 import 'package:travelerremake/core/widgets/panel/sidePanelWidget.dart';
 import 'package:travelerremake/features/home/presentation/sections/home_cover_section.dart';
+import 'package:travelerremake/features/home/presentation/widgets/cards/active_exploration_card.dart';
 import 'package:travelerremake/features/home/presentation/widgets/cards/current_location_card.dart';
 import 'package:travelerremake/features/home/presentation/widgets/cards/daily_streak_card.dart';
 import 'package:travelerremake/features/home/presentation/widgets/cards/discovery_badge_card.dart';
+import 'package:travelerremake/features/home/presentation/widgets/cards/explorer_level_card.dart';
 import 'package:travelerremake/features/home/presentation/widgets/cards/live_explorer_card.dart';
 import 'package:travelerremake/features/home/presentation/widgets/cards/map_progress_card.dart';
+import 'package:travelerremake/features/home/presentation/widgets/cards/next_title_card.dart';
+import 'package:travelerremake/features/home/presentation/widgets/cards/overwiev_card.dart';
 import 'package:travelerremake/features/home/presentation/widgets/cards/random_quest_card.dart';
 import 'package:travelerremake/features/home/presentation/widgets/cards/todays_challenge_card.dart';
-import 'package:travelerremake/features/home/presentation/widgets/explorer_overview_card.dart';
 import 'package:travelerremake/features/home/presentation/widgets/hero_header.dart';
 
 class HomePage extends StatelessWidget {
@@ -86,6 +89,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const SidePanel(),
+      backgroundColor: Colors.black,
       /*appBar: TopNavBar(
         title: "",
 
@@ -122,150 +126,123 @@ class HomePage extends StatelessWidget {
       ),
 */
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(18),
         child: Column(
           children: [
             const HomeHeroHeader(),
             //const HomeCoverSection(), Adnevture starts outside
-            const SizedBox(height: 24),
-            const ExplorerOverviewCard(),
+            Padding(
+              padding: const EdgeInsets.all(18),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ExplorerLevelCard(
+                    level: 12,
+                    currentXp: 1660,
+                    nextLevelXp: 2000,
+                    rank: "Explorer",
+                  ),
 
-            const SizedBox(height: 24),
+                  const SizedBox(height: 16),
 
-            Text(
-              "ACTIVE EXPLORATION",
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 1.5,
-                color: Colors.white.withValues(alpha: 0.5),
+                  const OverviewCard(),
+
+                  const SizedBox(height: 20),
+
+                  Container(
+                    padding: const EdgeInsets.all(18),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF181C24),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: Colors.white.withOpacity(.05)),
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            const Expanded(
+                              child: Text(
+                                "ACTIVE EXPLORATION",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w700,
+                                  letterSpacing: 1.5,
+                                  color: Colors.white54,
+                                ),
+                              ),
+                            ),
+
+                            TextButton(
+                              onPressed: () {
+                                // TODO
+                              },
+                              style: TextButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                minimumSize: Size.zero,
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                              child: const Text(
+                                "View All",
+                                style: TextStyle(
+                                  color: Color(0xFF4E7CFF),
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 16),
+
+                        Column(
+                          children: const [
+                            ActiveExplorationTile(
+                              title: "City Explorer",
+                              subtitle: "127 discovered",
+                              icon: Icons.apartment_rounded,
+                              color: Color(0xFF58B5F6),
+                              progress: .51,
+                            ),
+
+                            SizedBox(height: 12),
+
+                            ActiveExplorationTile(
+                              title: "Nature Lover",
+                              subtitle: "42 discovered",
+                              icon: Icons.park_rounded,
+                              color: Color(0xFF22C55E),
+                              progress: .42,
+                            ),
+
+                            SizedBox(height: 12),
+
+                            ActiveExplorationTile(
+                              title: "Road Walker",
+                              subtitle: "812 discovered",
+                              icon: Icons.alt_route_rounded,
+                              color: Color(0xFFF59E0B),
+                              progress: .81,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  // <-- Keep ALL your remaining widgets here
+                  const LiveExplorerCard(),
+
+                  const SizedBox(height: 20),
+
+                  const SizedBox(height: 16),
+
+                  MapProgressCard(),
+
+                  const RandomQuestCard(),
+
+                  // ...everything else...
+                  const SizedBox(height: 60),
+                ],
               ),
             ),
-
-            const SizedBox(height: 16),
-
-            Row(
-              children: [
-                Expanded(
-                  child: DiscoveryBadgeCard(
-                    icon: Icons.apartment,
-                    iconColor: const Color(0xFF58B5F6),
-                    title: "Buildings",
-                    discovered: 127,
-                    nextBadgeGoal: 250,
-                    badgeName: "City Explorer",
-                  ),
-                ),
-
-                const SizedBox(width: 16),
-
-                Expanded(
-                  child: DiscoveryBadgeCard(
-                    icon: Icons.park,
-                    iconColor: const Color(0xFF22C55E),
-                    title: "Parks",
-                    discovered: 42,
-                    nextBadgeGoal: 50,
-                    badgeName: "Nature Lover",
-                  ),
-                ),
-
-                const SizedBox(width: 16),
-
-                Expanded(
-                  child: DiscoveryBadgeCard(
-                    icon: Icons.route,
-                    iconColor: const Color(0xFFF59E0B),
-                    title: "Roads",
-                    discovered: 812,
-                    nextBadgeGoal: 1000,
-                    badgeName: "Road Walker",
-                  ),
-                ),
-              ],
-            ),
-
-            const RandomQuestCard(),
-
-            const SizedBox(height: 20),
-
-            const LiveExplorerCard(),
-
-            const SizedBox(height: 20),
-
-            const TodaysChallengeCard(),
-
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                Expanded(
-                  child: DiscoveryBadgeCard(
-                    icon: Icons.apartment,
-                    iconColor: const Color(0xFF58B5F6),
-                    title: "Buildings",
-                    discovered: 127,
-                    nextBadgeGoal: 250,
-                    badgeName: "City Explorer",
-                  ),
-                ),
-
-                const SizedBox(width: 16),
-
-                Expanded(
-                  child: DiscoveryBadgeCard(
-                    icon: Icons.park,
-                    iconColor: const Color(0xFF22C55E),
-                    title: "Parks",
-                    discovered: 42,
-                    nextBadgeGoal: 50,
-                    badgeName: "Nature Lover",
-                  ),
-                ),
-
-                const SizedBox(width: 16),
-
-                Expanded(
-                  child: DiscoveryBadgeCard(
-                    icon: Icons.route,
-                    iconColor: const Color(0xFFF59E0B),
-                    title: "Roads",
-                    discovered: 812,
-                    nextBadgeGoal: 1000,
-                    badgeName: "Road Walker",
-                  ),
-                ),
-              ],
-            ),
-
-            Row(
-              children: [
-                const Expanded(child: MapProgressCard()),
-
-                const SizedBox(width: 16),
-
-                const Expanded(
-                  child: AreaProgressCard(
-                    areaName: 'Stuttgart',
-                    discovered: 12,
-                    total: 122,
-                  ),
-                ),
-
-                const SizedBox(width: 16),
-
-                const Expanded(child: DailyStreakCard()),
-              ],
-            ),
-
-            const SizedBox(height: 20),
-
-            const RandomQuestCard(),
-
-            const HomeHeroHeader(),
-
-            const ExplorerOverviewCard(),
-
-            const SizedBox(height: 60),
           ],
         ),
       ),

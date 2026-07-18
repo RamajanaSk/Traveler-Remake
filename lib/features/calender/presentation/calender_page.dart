@@ -28,13 +28,7 @@ class _CalendarPageState extends State<CalendarPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const SidePanel(),
-      appBar: TopNavBar(
-        title: 'TRAVELER',
-        trailingIcon1: Icons.notifications_outlined,
-        trailingOnPressed1: () {},
-        trailingIcon2: Icons.person_outline,
-        trailingOnPressed2: () {},
-      ),
+
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(18),
         child: Column(
